@@ -39,4 +39,11 @@ class AlbumCreations(ModelForm):
         fields = ['name','share']
 
 class ImagesForm(forms.Form):
-    images = forms.ImageField(widget=forms.ClearableFileInput(attrs={'multiple': True}), label='Upload Images')
+    from django import forms
+
+class ImagesForm(forms.Form):
+    images = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}),
+        label='Upload Images',
+        required=False
+    )

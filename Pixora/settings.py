@@ -124,10 +124,7 @@ USE_L10N = True
 USE_TZ = True
 
 # settings.py
-LOGIN_REDIRECT_URL = '/dashboard'
-LOGOUT_REDIRECT_URL = '/'
 
-AUTH_USER_MODEL = 'pics.Customers'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/

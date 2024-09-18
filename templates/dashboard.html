@@ -36,6 +36,7 @@
                 <th>Shared</th>
                 <th>Path</th>
                 <th>Created At</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -46,10 +47,13 @@
                     <td>{{ album.share|yesno:"Yes,No" }}</td>
                     <td>{{ album.path }}</td>
                     <td>{{ album.created_at }}</td>
+                    <td><a href="{% url 'delete_album' album.id %}" onclick="return confirm('Are you sure you want to delete this album?');">
+                        Delete Album
+                    </a></td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5">You have no albums.</td>
+                    <td colspan="6">You have no albums.</td>
                 </tr>
             {% endfor %}
         </tbody>

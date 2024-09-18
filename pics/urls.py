@@ -24,11 +24,12 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('accounts/login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
     path('signup/', views.signup, name='signup'),
     path('albumcreate/', views.albumcreation, name='albumcreate'),
     path('album/<str:id>/', views.album_view, name='album'),  # Use <str:id> for string ID
     path('album/<str:id>/upload/', views.upload_photos, name='upload_photos'),  # Use <str:id> for string ID
     path('delete/<id>/<pid>/', views.delete_photo, name='delete_photo'),
+     path('album/delete/<int:id>/', views.delete_album, name='delete_album')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.shortcuts import render, redirect,HttpResponse,get_object_or_404
 from django.contrib import messages
 from .models import Customers,Albums,Photo
-from django.contrib.auth.decorators import login_required
 from .forms import UsersLoginForm,AlbumCreations
 import uuid,os
 from django.conf import settings
@@ -85,8 +84,7 @@ def verifyLogin(request):
         return logined ,email
     except TypeError:
         return False,None
-
-@login_required
+    
 def albumcreation(request):
     logined, email = verifyLogin(request)
     if logined:
@@ -114,7 +112,7 @@ def albumcreation(request):
                     media_folder = os.path.join(settings.MEDIA_ROOT, code)
                     os.makedirs(media_folder, exist_ok=True)
                     
-                    return redirect('album/', id=code)  # Redirect to the album view page
+                    return redirect('dashboard')  # Redirect to the album view page
                 except Exception as e:
                     # Handle any exceptions
                     print(f'Error creating album: {e}')
@@ -129,9 +127,17 @@ def albumcreation(request):
 
 # def dashboard(request):
     
-@login_required
-def album_view(request, id):
+get_object_or_404
 
+
+def logout(request):
+    
+    response = redirect('/')  # Redirect to a home page or login page after logout
+    response.delete_cookie('logined')  # Remove the 'logined' cookie
+    print('logout')
+    return response
+
+def album_view(request, id):
     # Fetch the album and its photos
     album = get_object_or_404(Albums, code=id)
     photos = album.photos.all()  # Get all photos related to the album
@@ -148,7 +154,6 @@ def album_view(request, id):
         
     return render(request, 'albumview.html', context)
 
-@login_required
 def upload_photos(request, id):
     album = get_object_or_404(Albums, code=id)
     photos = album.photos.all()
@@ -183,7 +188,31 @@ def upload_photos(request, id):
 from django.shortcuts import get_object_or_404, redirect
 from .models import Albums, Photo
 
-@login_required
+
+def delete_album(request, id):
+    logined, email = verifyLogin(request)
+    if logined:
+        try:
+            user = Customers.objects.get(email=email)
+            album = get_object_or_404(Albums, id=id, user=user)  # Ensure the user owns the album
+            
+            album.delete()  # Delete the album
+            
+            # Optionally, delete the media folder
+            media_folder = os.path.join(settings.MEDIA_ROOT, album.code)
+            if os.path.exists(media_folder):
+                os.rmdir(media_folder)  # This will only work if the folder is empty
+
+            messages.success(request, 'Album deleted successfully.')
+            return redirect('dashboard')
+        except Exception as e:
+            print(f'Error deleting albredirectdashboardum: {e}')
+            messages.error(request, 'An error occurred while deleting the album.')
+            return redirect('dashboard')
+    else:
+        return redirect('signup')
+
+
 def delete_photo(request, id, pid):
     # Get the album based on the ID
     album = get_object_or_404(Albums, code=id)
@@ -207,7 +236,6 @@ def delete_photo(request, id, pid):
     # Redirect to the album view page
     return redirect('album', id=id)  # Adjust redirection as needed
 
-@login_required
 def imageupload(request,id):
     form = ImagesForm(request.POST, request.FILES)
     if request.method == 'POST':

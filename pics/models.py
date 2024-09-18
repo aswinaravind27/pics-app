@@ -1,8 +1,6 @@
 from django.db import models
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-
 from django.contrib.auth.hashers import make_password, check_password
 
 class Customers(models.Model):
@@ -11,13 +9,7 @@ class Customers(models.Model):
     email = models.EmailField(max_length=255, verbose_name="Email Address")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date Created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
-    class Meta:
-        db_table = 'pics_customers'
     
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']  # Add any other fields that are required for creating a user
-
-    objects = BaseUserManager()
     def __str__(self):
         return self.name
 
@@ -48,6 +40,8 @@ class Albums(models.Model):
         return f"Album {self.code} by {self.user.username}"
 
 import os
+
+
 
 def uploadto(instance, filename):
     return os.path.join(f'{instance.album.code}/',filename)
