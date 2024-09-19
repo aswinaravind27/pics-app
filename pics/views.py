@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.http import urlencode
 from .models import Customers
 from .forms import UsersLoginForm, SignupForm
 from django.contrib import messages
-from django.shortcuts import render, redirect,HttpResponse,get_object_or_404
+from django.shortcuts import render, redirect,HttpResponse,get_object_or_404,HttpResponseRedirect
 from django.contrib import messages
 from .models import Customers,Albums,Photo
 from .forms import UsersLoginForm,AlbumCreations
@@ -41,6 +43,7 @@ def signup(request):
     return render(request, 'sign-up.html', {'form': form})
 
 def login(request):
+    next_url = request.POST.get('next','/dashboard')
     if request.method == 'POST':
         frm = UsersLoginForm(request.POST)
         if frm.is_valid():
@@ -53,10 +56,18 @@ def login(request):
                     if user.check_password(password):
                         # Authenticate and log in the user
                         print('logined')
-                        response = redirect('dashboard')  # Redirect to dashboard view
-                        response.set_cookie('logined', [True,email])  # Set the cookie
-                        
-                        return response
+                        if next_url:
+
+                            response = HttpResponseRedirect(next_url)  # Redirect to dashboard view
+                            response.set_cookie('logined', [True,email])  # Set the cookie
+                            
+                            return response
+                        else:
+                            response = redirect('dashboard') # Redirect to dashboard view
+                            response.set_cookie('logined', [True,email])  # Set the cookie
+                            
+                            return response
+
 
                     else:
                         messages.error(request, 'Incorrect password.')
@@ -70,7 +81,9 @@ def login(request):
             messages.error(request, 'Invalid form submission.')
     else:
         frm = UsersLoginForm()
-    return render(request, "login.html", {'form': frm})
+        next_url = request.GET.get('next', '/dashboard')
+
+    return render(request, "login.html", {'form': frm,'next':next_url})
 
 def verifyLogin(request):
 
@@ -94,7 +107,7 @@ def albumcreation(request):
                 album_name = request.POST.get('name')
                 album_share = request.POST.get('share')
                 if album_share == 'on' : album_share = True
-                else: album_share = True
+                else: album_share = False
                 # Generate a unique code for the album
                 code = str(uuid.uuid4())
                 
@@ -138,20 +151,33 @@ def logout(request):
     return response
 
 def album_view(request, id):
-    # Fetch the album and its photos
     album = get_object_or_404(Albums, code=id)
-    photos = album.photos.all()  # Get all photos related to the album
+    photos = album.photos.all()
     form = ImagesForm()
+    logind, email = verifyLogin(request)
+    path = request.get_full_path()
+    login_url = reverse('login')
+    next_url = f"{login_url}?{urlencode({'next': path})}"
+    
+    def check_ownership(id, email):
+        albumid = id
+        aldetails = Albums.objects.get(code=albumid)
+        ownerid = aldetails.user_id
+        ownerdetails = get_object_or_404(Customers, id=ownerid)
+        try:
+            ownermail = ownerdetails.email
+            return ownermail == email
+        except:
+            return False
+
     context = {
         'album': album,
         'photos': photos,
-        #r'imagename':photos.images.split('/')[-1],
-        'form':form
+        'form': form,
+        'logined': logind,
+        'owner': check_ownership(id, email),
+        'path': next_url  # Pass the correctly constructed URL
     }
-    for photo in photos:
-        print(photo.images)
-        
-        
     return render(request, 'albumview.html', context)
 
 def upload_photos(request, id):

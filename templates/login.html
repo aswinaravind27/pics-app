@@ -18,6 +18,7 @@
     {% endif %}
 
     <form method="post" action="{% url 'login' %}"> <!-- Note the trailing slash -->
+        <input type="hidden" name="next" value="{{ next }}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Login</button>
