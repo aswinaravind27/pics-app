@@ -55,4 +55,13 @@ class Photo(models.Model):
 
 
 
+class FavAlbums(models.Model):
+    user = models.ForeignKey(Customers, on_delete=models.CASCADE, related_name='favorite_albums')
+    album = models.ForeignKey(Albums, on_delete=models.CASCADE, related_name='favorited_by')
+    favorited_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ('user', 'album')  # Ensures that a user can only favorite an album once
+
+    def __str__(self):
+        return f"{self.user.username}'s favorite: {self.album.name}"

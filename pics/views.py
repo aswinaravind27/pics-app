@@ -6,7 +6,7 @@ from .forms import UsersLoginForm, SignupForm
 from django.contrib import messages
 from django.shortcuts import render, redirect,HttpResponse,get_object_or_404,HttpResponseRedirect
 from django.contrib import messages
-from .models import Customers,Albums,Photo
+from .models import Customers,Albums,Photo,FavAlbums
 from .forms import UsersLoginForm,AlbumCreations
 import uuid,os
 from django.conf import settings
@@ -22,9 +22,11 @@ def dashboard(request):
     if logined:
         # Render the dashboard template if the user is authenticated
         user = Customers.objects.get(email=email)
-        albums = Albums.objects.filter(user=user) 
+        albums = Albums.objects.filter(user=user)
+        favorited_albums = FavAlbums.objects.filter(user=user)
         context ={
-            'albums' : albums
+            'albums' : albums,
+            'fav':favorited_albums
         }
     #return render(request, 'dashboard.html', context)
         return render(request, 'dashboard.html',context) 
@@ -157,30 +159,42 @@ def album_view(request, id):
     photos = album.photos.all()
     form = ImagesForm()
     logind, email = verifyLogin(request)
+    print('hi')
+    # Redirect to login if the user is not logged in
+    # if not logind:
+    #     login_url = reverse('login')
+    #     next_url = f"{login_url}?{urlencode({'next': request.get_full_path()})}"
+    #     return redirect(next_url)
     path = request.get_full_path()
     login_url = reverse('login')
     next_url = f"{login_url}?{urlencode({'next': path})}"
     
-    def check_ownership(id, email):
-        albumid = id
-        aldetails = Albums.objects.get(code=albumid)
-        ownerid = aldetails.user_id
-        ownerdetails = get_object_or_404(Customers, id=ownerid)
-        try:
-            ownermail = ownerdetails.email
-            return ownermail == email
-        except:
-            return False
 
+    def check_ownership(album_code, user_email):
+        album_details = get_object_or_404(Albums, code=album_code)
+        return album_details.user.email == user_email
+
+    # Check if the album is favorited by the user
+    try:
+        user = Customers.objects.get(email=email)
+        is_favorited = FavAlbums.objects.filter(user=user, album=album).exists()
+    except:
+        user = None
+        is_favorited = False
+    print(f'is_favorited {is_favorited}')
     context = {
         'album': album,
         'photos': photos,
         'form': form,
         'logined': logind,
         'owner': check_ownership(id, email),
-        'path': next_url  # Pass the correctly constructed URL
+        'user': user,
+        'is_favorited': is_favorited,  # Add this line
+        'path': next_url
     }
+    
     return render(request, 'albumview.html', context)
+
 
 def upload_photos(request, id):
     album = get_object_or_404(Albums, code=id)
@@ -282,3 +296,20 @@ def imageupload(request,id):
         return redirect(f'album/{id}')
     context = {'form': form}
     return render(request, "upload.html", context)
+
+
+def Fav_albums(request, id):
+    logined, email = verifyLogin(request)
+
+    user = get_object_or_404(Customers, email=email)  # Get the user based on the email
+    album = get_object_or_404(Albums, code=id)  # Make sure you're fetching the album by the correct field
+
+    # Check if the album is already favorited
+    if FavAlbums.objects.filter(user=user, album=album).exists():
+        FavAlbums.objects.filter(user=user, album=album).delete()  # Remove from favorites
+    else:
+        FavAlbums.objects.create(user=user, album=album)  # Add to favorites
+
+    return redirect('album_view', id=id)  # Redirect to the album view
+
+    

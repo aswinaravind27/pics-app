@@ -58,6 +58,36 @@
             {% endfor %}
         </tbody>
     </table>
+    <table>
+        <h1>Your Favoriates</h1>
+    
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Shared</th>
+                <th>Path</th>
+                <th>Created At</th>
+                <th>Favoriated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fa in fav %}
+                <tr>
+                    <td>{{ fa.album.code }}</td>
+                    <td>{{ fa.album.name }}</td>
+                    <td>{{ fa.album.share|yesno:"Yes,No" }}</td>
+                    <td>{{ fa.album.path }}</td>
+                    <td>{{ fa.album.created_at }}</td>
+                    <td>{{ fa.favorited_at }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6">You have no Favoriate albums.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     
 </body>
 </html>

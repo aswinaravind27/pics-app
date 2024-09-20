@@ -1,124 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photos in {{ album.name }}</title>
     <style type="text/css">
-        .container{
+        .container {
             margin-top: 20rem;
         }
     </style>
 </head>
+
 <body>
-    {% if album.share and logined %}
     <h1>Photos in {{ album.name }}</h1>
-    <div>
-        {% if photos %}
-            <ul>
-                {% for photo in photos %}
-                    <li>
-                        <img src="{{photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
-                        <p>Uploaded by: {{ photo.uploaded_by }}</p>
-                        <p>Uploaded at: {{ photo.uploaded_at }}</p>
-                        {% if photo.images %}
-                        <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
-                        {% else %}
-                            <p>Filename not available</p>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No photos available.</p>
-        {% endif %}
-    </div>
-
-    <div class="container center">
-        <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Files Here</label>
-                {{ form.as_p }}  <!-- Make sure your form includes the file input field -->
-            </div>
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-    </div>
-    {% elif album.share and not logined %}
-    <h1>Photos in {{ album.name }}</h1>
-    <div>
-        {% if photos %}
-            <ul>
-                {% for photo in photos %}
-                    <li>
-                        <img src="{{photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
-                        <p>Uploaded by: {{ photo.uploaded_by }}</p>
-                        <p>Uploaded at: {{ photo.uploaded_at }}</p>
-                        {% if photo.images %}
-                        <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
-                        {% else %}
-                            <p>Filename not available</p>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No photos available.</p>
-        {% endif %}
-    </div>
-    <a href="{{ path }}" class="btn btn-primary">
-        Login to UPLOAD
-    </a>
     
-    <!-- <div class="container center">
-        <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Files Here</label>
-                {{ form.as_p }}  <!-- Make sure your form includes the file input field -->
-            </div>
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-    </div> -->
-    
-    {% elif not album.share and owner %}
-    <h1>Photos in {{ album.name }}</h1>
-    <div>
-        {% if photos %}
-            <ul>
-                {% for photo in photos %}
-                    <li>
-                        <img src="{{photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
-                        <p>Uploaded by: {{ photo.uploaded_by }}</p>
-                        <p>Uploaded at: {{ photo.uploaded_at }}</p>
-                        {% if photo.images %}
-                        <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
-                        {% else %}
-                            <p>Filename not available</p>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No photos available.</p>
-        {% endif %}
-    </div>
+    {% if album.share %}
+        {% if logined %}
+            <form method="post" action="{% url 'favorite_album' album.code %}">
+                {% csrf_token %}
+                {% if is_favorited %}
+                    <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                {% else %}
+                    <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                {% endif %}
+            </form>
 
-    <div class="container center">
-        <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Files Here</label>
-                {{ form.as_p }}  <!-- Make sure your form includes the file input field -->
+            <div>
+                {% if photos %}
+                    <ul>
+                        {% for photo in photos %}
+                            <li>
+                                <img src="{{ photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
+                                <p>Uploaded by: {{ photo.uploaded_by }}</p>
+                                <p>Uploaded at: {{ photo.uploaded_at }}</p>
+                                {% if photo.images %}
+                                    <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
+                                {% else %}
+                                    <p>Filename not available</p>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No photos available.</p>
+                {% endif %}
             </div>
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-    </div>
-    {% elif not album.share and logined %}
-    <p>This Album isnt shared</p>
-    {% elif not album.share and not logined %}
-    <p>This Album isnt shared</p>
-    <p>If you are the owner  of this album please login and view it </p>
+
+            <div class="container center">
+                <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Upload Files Here</label>
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </form>
+            </div>
+
+        {% else %}
+            <div>
+                {% if photos %}
+                    <ul>
+                        {% for photo in photos %}
+                            <li>
+                                <img src="{{ photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
+                                <p>Uploaded by: {{ photo.uploaded_by }}</p>
+                                <p>Uploaded at: {{ photo.uploaded_at }}</p>
+                                {% if photo.images %}
+                                    <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
+                                {% else %}
+                                    <p>Filename not available</p>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No photos available.</p>
+                {% endif %}
+            </div>
+            <a href="{{ path }}" class="btn btn-primary">Login to UPLOAD</a>
+        {% endif %}
+    {% else %}
+        {% if owner %}
+            <p>This Album isn't shared. If you are the owner of this album, please login and view it.</p>
+        {% else %}
+            <p>This Album isn't shared.</p>
+        {% endif %}
     {% endif %}
 </body>
+
 </html>
