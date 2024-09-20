@@ -13,6 +13,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib import messages
 from .forms import UsersLoginForm,ImagesForm
+import shutil
+
 # Create your views here.
 def dashboard(request):
     logined,email = verifyLogin(request)
@@ -226,8 +228,9 @@ def delete_album(request, id):
             
             # Optionally, delete the media folder
             media_folder = os.path.join(settings.MEDIA_ROOT, album.code)
+            print(media_folder)
             if os.path.exists(media_folder):
-                os.rmdir(media_folder)  # This will only work if the folder is empty
+                shutil.rmtree(media_folder)  # This will only work if the folder is empty
 
             messages.success(request, 'Album deleted successfully.')
             return redirect('dashboard')
