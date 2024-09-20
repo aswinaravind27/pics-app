@@ -1,27 +1,84 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login & Registration</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h2>Login</h2>
+    <div class="cont">
+        <!-- Login Form (Django) -->
+        <div class="form sign-in">
+            <h2>Sign In</h2>
 
-    <!-- Display messages -->
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+            <!-- Display Django messages -->
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
 
-    <form method="post" action="{% url 'login' %}"> <!-- Note the trailing slash -->
-        <input type="hidden" name="next" value="{{ next }}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
+            <form method="post" action="{% url 'login' %}">
+                <input type="hidden" name="next" value="{{ next }}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="submit" type="submit">Sign In</button>
+            </form>
+
+            
+            
+
+            
+        </div>
+
+        <div class="sub-cont">
+            <div class="img">
+                <div class="img-text m-up">
+                    <h2>New here?</h2>
+                    <p>Sign up and discover a great amount of new opportunities!</p>
+                </div>
+                <div class="img-text m-in">
+                    <h2>One of us?</h2>
+                    <p>If you already have an account, just sign in. We've missed you!</p>
+                </div>
+                <div class="img-btn">
+                    <span class="m-up">Sign Up</span>
+                    <span class="m-in">Sign In</span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="form sign-up">
+                <h2>Sign Up</h2>
+                <form method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    <label>
+                        <span>Name</span>
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>
+                        <span>Password</span>
+                        <input type="password" name="password1" required>
+                    </label>
+                    <label>
+                        <span>Confirm Password</span>
+                        <input type="password" name="password2" required>
+                    </label>
+                    <button type="submit" class="submit">Sign Up Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
