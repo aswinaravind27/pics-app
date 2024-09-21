@@ -38,13 +38,17 @@ def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
+            print('else21')
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])  # Hash the password
             user.save()
             return redirect('login')  # Redirect to login page
+        else:
+            print('else')
+            return redirect('login')
     else:
         form = SignupForm()
-    return render(request, 'sign-up.html', {'form': form})
+    
 
 def login(request):
     next_url = request.POST.get('next','/dashboard')

@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 from . models import Customers,Albums,Photo
 from django import forms
+from django.core.exceptions import ValidationError
 
 class UsersLoginForm(ModelForm):
     password = forms.CharField(
