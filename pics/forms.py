@@ -28,9 +28,16 @@ class UsersLoginForm(ModelForm):
         fields = ['email', 'password'] 
 
 class SignupForm(ModelForm):
+    
     class Meta:
         model = Customers
         fields = '__all__'
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if Customers.objects.filter(email=email).exists():
+            raise ValidationError("A customer with this email already exists.")
+        return email    
 
 class AlbumCreations(ModelForm):
 

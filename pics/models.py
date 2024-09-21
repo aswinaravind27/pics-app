@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password, check_password
 class Customers(models.Model):
     name = models.CharField(max_length=100, verbose_name="Full Name")
     password = models.CharField(max_length=128, verbose_name="Password")
-    email = models.EmailField(max_length=255, verbose_name="Email Address")
+    email = models.EmailField(max_length=255, unique=True, verbose_name="Email Address")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date Created")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
     

@@ -32,7 +32,7 @@ def dashboard(request):
         return render(request, 'dashboard.html',context) 
     else:
         
-        return redirect('signup')  
+        return redirect('login')  
 
 def signup(request):
     if request.method == 'POST':
@@ -216,7 +216,7 @@ def upload_photos(request, id):
                     images=image,
                     uploaded_by=user
                 )
-            return redirect('album', id=id)
+            return redirect('album_view', id=id)
     else:
         form = ImagesForm()
 
@@ -277,7 +277,7 @@ def delete_photo(request, id, pid):
     photo.delete()
     
     # Redirect to the album view page
-    return redirect('album', id=id)  # Adjust redirection as needed
+    return redirect('album_view', id=id)  # Adjust redirection as needed
 
 def imageupload(request,id):
     form = ImagesForm(request.POST, request.FILES)
