@@ -37,7 +37,7 @@ class SignupForm(ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Customers.objects.filter(email=email).exists():
-            raise ValidationError("A customer with this email already exists.")
+            raise ValidationError("A customer with this email already exists. signform ")
         return email    
 
 class AlbumCreations(ModelForm):

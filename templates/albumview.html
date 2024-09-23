@@ -1,22 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% extends 'base.html' %}
+{% block title %}
+    
     <title>Photos in {{ album.name }}</title>
     <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
         .container {
-            margin-top: 20rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 15px;
+        }
+
+        .favorite-form {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-item {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .photo-info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .photo-info p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .delete-link {
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .delete-link:hover {
+            text-decoration: underline;
+        }
+
+        .upload-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .upload-container form {
+            display: inline-block;
+            text-align: left;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-container .btn {
+            margin-top: 10px;
         }
     </style>
-</head>
+{% endblock %}
 
-<body>
-    <h1>Photos in {{ album.name }}</h1>
+
+{% block content %}
     
+<div class="container">
+    <h1>Photos in {{ album.name }}</h1>
+
     {% if album.share %}
         {% if logined %}
+        <div class="favorite-form">
             <form method="post" action="{% url 'favorite_album' album.code %}">
                 {% csrf_token %}
                 {% if is_favorited %}
@@ -25,29 +109,30 @@
                     <button type="submit" class="btn btn-primary">Add to Favorites</button>
                 {% endif %}
             </form>
+        </div>
+        {% endif %}
 
-            <div>
-                {% if photos %}
-                    <ul>
-                        {% for photo in photos %}
-                            <li>
-                                <img src="{{ photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
-                                <p>Uploaded by: {{ photo.uploaded_by }}</p>
-                                <p>Uploaded at: {{ photo.uploaded_at }}</p>
-                                {% if photo.images %}
-                                    <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
-                                {% else %}
-                                    <p>Filename not available</p>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No photos available.</p>
-                {% endif %}
-            </div>
+        <div class="photo-grid">
+            {% if photos %}
+                {% for photo in photos %}
+                    <div class="photo-item">
+                        <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
+                        <div class="photo-info">
+                            <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
+                            <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
+                            {% if logined %}
+                                <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');" class="delete-link">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No photos available.</p>
+            {% endif %}
+        </div>
 
-            <div class="container center">
+        {% if logined %}
+            <div class="upload-container">
                 <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-3">
@@ -57,37 +142,17 @@
                     <button type="submit" class="btn btn-outline-primary">Submit</button>
                 </form>
             </div>
-
         {% else %}
-            <div>
-                {% if photos %}
-                    <ul>
-                        {% for photo in photos %}
-                            <li>
-                                <img src="{{ photo.images.url }}" alt="Photo" style="width: 300px; height: auto;">
-                                <p>Uploaded by: {{ photo.uploaded_by }}</p>
-                                <p>Uploaded at: {{ photo.uploaded_at }}</p>
-                                {% if photo.images %}
-                                    <a href="{% url 'delete_photo' album.code photo.id %}" onclick="return confirm('Are you sure you want to delete this photo?');">Delete</a>
-                                {% else %}
-                                    <p>Filename not available</p>
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No photos available.</p>
-                {% endif %}
-            </div>
             <a href="{{ path }}" class="btn btn-primary">Login to UPLOAD</a>
         {% endif %}
     {% else %}
-        {% if owner %}
-            <p>This Album isn't shared. If you are the owner of this album, please login and view it.</p>
-        {% else %}
-            <p>This Album isn't shared.</p>
-        {% endif %}
+        <p>
+            {% if owner %}
+                This Album isn't shared. If you are the owner of this album, please login and view it.
+            {% else %}
+                This Album isn't shared.
+            {% endif %}
+        </p>
     {% endif %}
-</body>
-
-</html>
+</div>
+{% endblock %}
