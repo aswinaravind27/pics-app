@@ -15,12 +15,12 @@ from django.contrib import messages
 from .forms import UsersLoginForm,ImagesForm
 import shutil
 
-# Create your views here.
+
 def dashboard(request):
     logined,email = verifyLogin(request)
     print(logined)
     if logined:
-        # Render the dashboard template if the user is authenticated
+       
         user = Customers.objects.get(email=email)
         albums = Albums.objects.filter(user=user)
         favorited_albums = FavAlbums.objects.filter(user=user)
@@ -28,7 +28,7 @@ def dashboard(request):
             'albums' : albums,
             'fav':favorited_albums
         }
-    #return render(request, 'dashboard.html', context)
+    
         return render(request, 'dashboard.html',context) 
     else:
         
@@ -40,9 +40,9 @@ def signup(request):
         if form.is_valid():
             print('else21')
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])  # Hash the password
+            user.set_password(form.cleaned_data['password']) 
             user.save()
-            return redirect('login')  # Redirect to login page
+            return redirect('login') 
         else:
             print('else')
             return redirect('login')
@@ -62,17 +62,17 @@ def login(request):
                 try:
                     user = Customers.objects.get(email=email)
                     if user.check_password(password):
-                        # Authenticate and log in the user
+                        
                         print('logined')
                         if next_url:
 
-                            response = HttpResponseRedirect(next_url)  # Redirect to dashboard view
-                            response.set_cookie('logined', [True,email])  # Set the cookie
+                            response = HttpResponseRedirect(next_url) 
+                            response.set_cookie('logined', [True,email]) 
                             
                             return response
                         else:
-                            response = redirect('dashboard') # Redirect to dashboard view
-                            response.set_cookie('logined', [True,email])  # Set the cookie
+                            response = redirect('dashboard') 
+                            response.set_cookie('logined', [True,email]) 
                             
                             return response
 
@@ -116,26 +116,26 @@ def albumcreation(request):
                 album_share = request.POST.get('share')
                 if album_share == 'on' : album_share = True
                 else: album_share = False
-                # Generate a unique code for the album
+               
                 code = str(uuid.uuid4())
                 
                 try:
-                    # Create and save the album
+                    
                     album = Albums.objects.create(
                         name=album_name,
                         path=f'{code}\\',
-                        user=Customers.objects.get(email=email),  # Fetch user using email
+                        user=Customers.objects.get(email=email),  
                         share=album_share,
                         code=code
                     )
                     
-                    # Create the media folder
+                    
                     media_folder = os.path.join(settings.MEDIA_ROOT, code)
                     os.makedirs(media_folder, exist_ok=True)
                     
-                    return redirect('dashboard')  # Redirect to the album view page
+                    return redirect('dashboard') 
                 except Exception as e:
-                    # Handle any exceptions
+                    
                     print(f'Error creating album: {e}')
                     messages.error(request, 'An error occurred while creating the album.')
         else:
@@ -146,15 +146,14 @@ def albumcreation(request):
         return redirect('signup')
 
 
-# def dashboard(request):
-    
+
 get_object_or_404
 
 
 def logout(request):
     
-    response = redirect('/')  # Redirect to a home page or login page after logout
-    response.delete_cookie('logined')  # Remove the 'logined' cookie
+    response = redirect('/')  # 
+    response.delete_cookie('logined')
     print('logout')
     return response
 
@@ -193,7 +192,7 @@ def album_view(request, id):
         'logined': logind,
         'owner': check_ownership(id, email),
         'user': user,
-        'is_favorited': is_favorited,  # Add this line
+        'is_favorited': is_favorited,  
         'path': next_url
     }
     
@@ -206,8 +205,8 @@ def upload_photos(request, id):
 
     if request.method == 'POST':
         form = ImagesForm(request.POST, request.FILES)
-        print("Form errors:", form.errors)  # Print form errors for debugging
-        print("FILES data:", request.FILES)  # Print uploaded files data for debugging
+        print("Form errors:", form.errors)  
+        print("FILES data:", request.FILES)  
         
         if form.is_valid():
             images = request.FILES.getlist('images')
@@ -240,15 +239,15 @@ def delete_album(request, id):
     if logined:
         try:
             user = Customers.objects.get(email=email)
-            album = get_object_or_404(Albums, id=id, user=user)  # Ensure the user owns the album
+            album = get_object_or_404(Albums, id=id, user=user)  
             
-            album.delete()  # Delete the album
+            album.delete() 
             
-            # Optionally, delete the media folder
+           
             media_folder = os.path.join(settings.MEDIA_ROOT, album.code)
             print(media_folder)
             if os.path.exists(media_folder):
-                shutil.rmtree(media_folder)  # This will only work if the folder is empty
+                shutil.rmtree(media_folder)  
 
             messages.success(request, 'Album deleted successfully.')
             return redirect('dashboard')
