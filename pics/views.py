@@ -280,7 +280,7 @@ def delete_photo(request, id, pid):
     photo.delete()
     
     # Redirect to the album view page
-    return redirect('album_view', id=id)  # Adjust redirection as needed
+    return redirect('album_view', id=id) 
 
 def imageupload(request,id):
     form = ImagesForm(request.POST, request.FILES)
