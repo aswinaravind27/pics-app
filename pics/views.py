@@ -15,6 +15,8 @@ from django.contrib import messages
 from .forms import UsersLoginForm,ImagesForm
 import shutil
 
+def index(request):
+    return render(request,'index.html')
 
 def dashboard(request):
     logined,email = verifyLogin(request)
