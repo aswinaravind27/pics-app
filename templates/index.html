@@ -1,7 +1,30 @@
 {% extends 'base.html' %}
-{% block tittle %}
-<tittle>Pixora</tittle>
+{% block title %}
+<title>Pixora</title>
 {% endblock %}
-{% block content %}
 
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+    <div>
+        <h1 style="margin-top: 0; font-family: 'Arial', sans-serif;">Pixora - Album Sharing App</h1>
+        <p>
+            Pixora is a user-friendly album-sharing web application that allows users to create, upload, and share photo albums with others. 
+            Users can also mark albums as their favorites, making it easy to revisit memorable moments.
+        </p>
+        <h2 style="text-align: left; font-family: 'Berlin Sans FB', sans-serif; font-weight: normal;">Key Features:</h2>
+        <ul style="list-style-type: none; text-align: left;">
+            <li style="margin-bottom: 10px;">Easy sign-up and login with user authentication</li>
+            <li style="margin-bottom: 10px;">Google Drive integration for seamless album storage</li>
+            <li style="margin-bottom: 10px;">Create, upload, and share albums with a shareable link</li>
+            <li style="margin-bottom: 10px;">Mark albums as favorites to organize cherished moments</li>
+            <li style="margin-bottom: 10px;">View and upload photos through a shared link with restricted access</li>
+            <li style="margin-bottom: 10px;">Responsive design for both desktop and mobile users</li>
+        </ul>
+        <div>
+            <a href="#" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;">
+                Visit Pixora
+            </a>
+        </div>
+    </div>
+</div>
 {% endblock %}
