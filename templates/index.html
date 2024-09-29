@@ -25,12 +25,26 @@
                 Visit Pixora
             </a>
         </div>
-        <p style="font-family: 'Bell MT', monospace; margin-top: 50px;"> <!-- Increased margin-top for credits -->
+        <p style="font-family: 'Bell MT', monospace; margin-top: 40px;">
             <strong>CREDITS:</strong> 
-            <a href="https://instagram.com/aaronshenny" target="_blank" style="text-decoration: none; color: inherit;">Aaron Shenny</a>, 
-            <a href="https://instagram.com/aaronjimmy_207" target="_blank" style="text-decoration: none; color: inherit;">Aaron Jimmy</a>, 
-            <a href="https://instagram.com/aswinaravind27" target="_blank" style="text-decoration: none; color: inherit;">Aswin Aravind</a>
+            <a href="https://instagram.com/aaronshenny" target="_blank" class="credit-link">Aaron Shenny</a>, 
+            <a href="https://instagram.com/aaronjimmy_207" target="_blank" class="credit-link">Aaron Jimmy</a>, 
+            <a href="https://instagram.com/aswinaravind27" target="_blank" class="credit-link">Aswin Aravind</a>
         </p>
     </div>
 </div>
+
+<style>
+    
+    .credit-link {
+        text-decoration: none;
+        color: inherit;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .credit-link:hover {
+        color: #00fce3;
+        transform: scale(3.5); 
+    }
+</style>
 {% endblock %}
