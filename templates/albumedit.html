@@ -89,7 +89,7 @@
             </ul>
         {% endif %}
 
-        <form method="post" action="{% url 'editalbum' %}">
+        <form method="post" action="{% url 'editalbum' album.code %}">
             {% csrf_token %}
             <label>
                 <span>Album Name</span>
@@ -99,7 +99,11 @@
                 
             </label>
                 <span>Share</span>
-                <input type="checkbox" name="name" value={{album.share}} required>
+                {% if album.share %}
+                <input type="checkbox" name="share" checked >
+                {% elif not album.share %}
+                <input type="checkbox" name="share"  >
+                {% endif %}
             </label>
             <button type="submit">Finished</button>
         </form>

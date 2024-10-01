@@ -34,5 +34,5 @@ urlpatterns = [
     path('delete/<id>/<pid>/', views.delete_photo, name='delete_photo'),
     path('album/delete/<int:id>/', views.delete_album, name='delete_album'),
     path('album/<uuid:id>/favorite/', views.Fav_albums, name='favorite_album'),
-    path('/album/edit/<uuid:id>',views.EditAlbum,name='editalbum')
+    path('album/<uuid:id>/edit/',views.EditAlbum,name='editalbum')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
