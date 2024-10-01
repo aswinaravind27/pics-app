@@ -318,3 +318,16 @@ def Fav_albums(request, id):
     return redirect('album_view', id=id)  # Redirect to the album view
 
     
+def EditAlbum(request,code):
+    album = Albums.objects.get(code=code)
+    if request.POST():
+        name = request.POST.['name']
+        share = request.POST.['share']
+        Album = Albums.objects.get(id=id)
+        Album.firstname = first
+        Album.lastname = last
+        Album.save()
+    context = {
+        'album' : album
+    }
+    return render(request, 'albumedit.html', context)
