@@ -4,10 +4,16 @@
 {% endblock %}
 
 {% block content %}
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;">
+<!-- Title at the top -->
+<div style="text-align: center; margin-top: 20px;">
+    <h1 style="font-family: 'Arial', sans-serif; font-weight: bold; font-size: 48px;">Pixora - Album Sharing App</h1>
+</div>
+
+<!-- Main content centered vertically with more upward adjustment -->
+<div style="display: flex; justify-content: center; align-items: center; height: 70vh; text-align: center;">
     <div>
-        <h1 style="margin-top: 0; font-family: 'Arial', sans-serif; font-weight: bold; font-size: 48px;">Pixora - Album Sharing App</h1>
-        <p>
+        <!-- Move the description text a bit higher with reduced margin -->
+        <p style="margin-bottom: 20px;">
             Pixora is a user-friendly album-sharing web application that allows users to create, upload, and share photo albums with others. 
             Users can also mark albums as their favorites, making it easy to revisit memorable moments.
         </p>
@@ -25,17 +31,20 @@
                 Visit Pixora
             </a>
         </div>
-        <p style="font-family: 'Bell MT', monospace; margin-top: 40px;">
-            <strong>CREDITS:</strong> 
-            <a href="https://instagram.com/aaronshenny" target="_blank" class="credit-link">Aaron Shenny</a>, 
-            <a href="https://instagram.com/aaronjimmy_207" target="_blank" class="credit-link">Aaron Jimmy</a>, 
-            <a href="https://instagram.com/aswinaravind27" target="_blank" class="credit-link">Aswin Aravind</a>
-        </p>
     </div>
 </div>
 
+<!-- Credits section moved up -->
+<div style="text-align: center; padding: 10px 0; margin-top: 40px;">
+    <p style="font-family: 'Bell MT', monospace;">
+        <strong>CREDITS:</strong> 
+        <a href="https://instagram.com/aaronshenny" target="_blank" class="credit-link">Aaron Shenny</a>, 
+        <a href="https://instagram.com/aaronjimmy_207" target="_blank" class="credit-link">Aaron Jimmy</a>, 
+        <a href="https://instagram.com/aswinaravind27" target="_blank" class="credit-link">Aswin Aravind</a>
+    </p>
+</div>
+
 <style>
-    
     .credit-link {
         text-decoration: none;
         color: inherit;
