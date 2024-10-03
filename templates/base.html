@@ -14,7 +14,9 @@
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
 
     <!-- Title Block with Default Fallback -->
-    <title>{% block title %}PIXORA - Manage Albums{% endblock %}</title>
+    {% block title %}
+    
+    {% endblock %}
 </head>
 <body>
     <!-- Navbar -->
