@@ -20,6 +20,7 @@ def index(request):
 
 def dashboard(request):
     logined,email = verifyLogin(request)
+
     print(logined)
     if logined:
        
@@ -28,7 +29,9 @@ def dashboard(request):
         favorited_albums = FavAlbums.objects.filter(user=user)
         context ={
             'albums' : albums,
-            'fav':favorited_albums
+            'fav':favorited_albums,
+            'logined': logined,
+            'user':user
         }
     
         return render(request, 'dashboard.html',context) 

@@ -32,8 +32,8 @@
                     <a class="nav-link" href="/albumcreate">Create Album</a>
                 </div>
                 <div class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                        <span class="navbar-text me-2">Hello, {{ user.username }}!</span>
+                    {% if logined %}
+                        <span class="navbar-text me-2">Hello, {{ user.name }}!</span>
                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                     {% else %}
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
