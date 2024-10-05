@@ -26,7 +26,11 @@
         margin-bottom: 2rem;
         color: #333;
     }
-
+    .ownername {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #333;
+    }
     .photo-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -92,7 +96,6 @@
 </style>
 {% endblock %}
 
-
 {% block content %}
 
 <div class="container">
@@ -100,41 +103,50 @@
 
     {% if album.share %}
         {% if logined %}
-        <div class="favorite-form">
-            <form method="post" action="{% url 'favorite_album' album.code %}">
-                {% csrf_token %}
-                {% if is_favorited %}
-                <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+            <div class="favorite-form">
+                <form method="post" action="{% url 'favorite_album' album.code %}">
+                    {% csrf_token %}
+                    {% if is_favorited %}
+                        <button type="submit" class="btn btn-danger">Remove from Favorites</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                    {% endif %}
+                </form>
+                {% if owner %}
+                    <a href="{% url 'editalbum' album.code %}">
+                        <span class="material-symbols-outlined" style="padding-top: 5px;">edit</span>
+                    </a>
                 {% else %}
-                <button type="submit" class="btn btn-primary">Add to Favorites</button>
+                <p> This album is owned by {{ ownername }}</p>
                 {% endif %}
-            </form>
-        </div>
+            </div>
         {% endif %}
-
+        {% if not owner %}
+            
+        <p class="ownername"> This album is owned by {{ ownername }}</p>
+        {% endif %}
         <div class="photo-grid">
             {% if photos %}
-            {% for photo in photos %}
-            <div class="photo-item">
-                <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
-                <div class="photo-info">
-                    <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
-                    <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
-                    {% if logined %}
-                    <a href="{% url 'delete_photo' album.code photo.id %}"
-                        onclick="return confirm('Are you sure you want to delete this photo?');"
-                        class="delete-link">Delete</a>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
+                {% for photo in photos %}
+                    <div class="photo-item">
+                        <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
+                        <div class="photo-info">
+                            <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
+                            <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
+                            {% if logined %}
+                                <a href="{% url 'delete_photo' album.code photo.id %}"
+                                   onclick="return confirm('Are you sure you want to delete this photo?');"
+                                   class="delete-link">Delete</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             {% else %}
-            <p>No photos available.</p>
+                <p>No photos available.</p>
             {% endif %}
         </div>
 
         {% if logined %}
-        <!-- upload center -->
             <div class="upload-container">
                 <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -146,84 +158,77 @@
                 </form>
             </div>
         {% elif not logined and owner %}
-        <!-- photo viewer -->
             <div class="photo-grid">
                 {% if photos %}
-                {% for photo in photos %}
-                <div class="photo-item">
-                    <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
-                    <div class="photo-info">
-                        <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
-                        <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
-                        {% if logined %}
-                        <a href="{% url 'delete_photo' album.code photo.id %}"
-                            onclick="return confirm('Are you sure you want to delete this photo?');"
-                            class="delete-link">Delete</a>
-                        {% endif %}
-                    </div>
-                </div>
-        {% endfor %}
-        {% else %}
-        <p>No photos available.</p>
-        {% endif %}
-    </div>
-    <div class="upload-container">
-        <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Files Here</label>
-                {{ form.as_p }}
-            </div>
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-    </div>
-    {% else %}
-    <a href="{{ path }}" class="btn btn-primary">Login to UPLOAD</a>
-    {% endif %}
-    {% else %}
-    {% if owner%}
-    <a href="/edit">
-    <span class="material-symbols-outlined">
-        edit
-        </span>
-    </a>
-    <div class="photo-grid">
-        {% if photos %}
-        {% for photo in photos %}
-        <div class="photo-item">
-            <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
-            <div class="photo-info">
-                <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
-                <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
-                {% if logined %}
-                <a href="{% url 'delete_photo' album.code photo.id %}"
-                    onclick="return confirm('Are you sure you want to delete this photo?');"
-                    class="delete-link">Delete</a>
+                    {% for photo in photos %}
+                        <div class="photo-item">
+                            <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
+                            <div class="photo-info">
+                                <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
+                                <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
+                                {% if logined %}
+                                    <a href="{% url 'delete_photo' album.code photo.id %}"
+                                       onclick="return confirm('Are you sure you want to delete this photo?');"
+                                       class="delete-link">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No photos available.</p>
                 {% endif %}
             </div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <p>No photos available.</p>
-        {% endif %}
-    </div>
-    <div class="upload-container">
-        <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Upload Files Here</label>
-                {{ form.as_p }}
+            <div class="upload-container">
+                <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Upload Files Here</label>
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-outline-primary">Submit</button>
-        </form>
-    </div>
+        {% else %}
+            <a href="{{ path }}" class="btn btn-primary">Login to UPLOAD</a>
+        {% endif %}
     {% else %}
-    <p>
-
-        This Album isn't shared.
-
-    </p>
-    {% endif %}
+        {% if owner %}
+            <a href="{% url 'editalbum' album.code %}">
+                <span class="material-symbols-outlined">edit</span>
+            </a>
+            <div class="photo-grid">
+                {% if photos %}
+                    {% for photo in photos %}
+                        <div class="photo-item">
+                            <img src="{{ photo.images.url }}" alt="Photo uploaded by {{ photo.uploaded_by }}" class="photo-img">
+                            <div class="photo-info">
+                                <p><strong>Uploaded by:</strong> {{ photo.uploaded_by }}</p>
+                                <p><strong>Uploaded at:</strong> {{ photo.uploaded_at }}</p>
+                                {% if logined %}
+                                    <a href="{% url 'delete_photo' album.code photo.id %}"
+                                       onclick="return confirm('Are you sure you want to delete this admin photo?');"
+                                       class="delete-link">Delete</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No photos available.</p>
+                {% endif %}
+            </div>
+            <div class="upload-container">
+                <form method="POST" action="{% url 'upload_photos' album.code %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Upload Files Here</label>
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Submit</button>
+                </form>
+            </div>
+        {% else %}
+            <p>This Album isn't shared.</p>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}

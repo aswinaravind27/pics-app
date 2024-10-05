@@ -16,7 +16,27 @@ from .forms import UsersLoginForm,ImagesForm
 import shutil
 
 def index(request):
-    return render(request,'index.html')
+    logined,email = verifyLogin(request)
+    if logined:
+       
+        user = Customers.objects.get(email=email)
+        albums = Albums.objects.filter(user=user)
+        favorited_albums = FavAlbums.objects.filter(user=user)
+        context ={
+            'albums' : albums,
+            'fav':favorited_albums,
+            'logined': logined,
+            'user':user
+        }
+    else:
+        context ={
+            
+            
+            'logined': False,
+            
+        }
+        
+    return render(request,'index.html',context)
 
 def dashboard(request):
     logined,email = verifyLogin(request)
@@ -180,7 +200,7 @@ def album_view(request, id):
 
     def check_ownership(album_code, user_email):
         album_details = get_object_or_404(Albums, code=album_code)
-        return album_details.user.email == user_email
+        return album_details.user.email == user_email,album_details.user.name
 
     # Check if the album is favorited by the user
     try:
@@ -190,17 +210,19 @@ def album_view(request, id):
         user = None
         is_favorited = False
     print(f'is_favorited {is_favorited}')
+    owner , oemail = check_ownership(id, email)
     context = {
         'album': album,
         'photos': photos,
         'form': form,
         'logined': logind,
-        'owner': check_ownership(id, email),
+        'owner': owner,
+        'ownername' :oemail,
         'user': user,
         'is_favorited': is_favorited,  
         'path': next_url
     }
-    
+    print(check_ownership(id,email))
     return render(request, 'albumview.html', context)
 
 
