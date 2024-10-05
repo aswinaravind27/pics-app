@@ -182,7 +182,11 @@
     {% endif %}
     {% else %}
     {% if owner%}
-    
+    <a href="/edit">
+    <span class="material-symbols-outlined">
+        edit
+        </span>
+    </a>
     <div class="photo-grid">
         {% if photos %}
         {% for photo in photos %}
