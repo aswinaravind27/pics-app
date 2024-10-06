@@ -19,8 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('wp-admin/', admin.site.urls),
-    path('admin/', include(('wp_admin.urls', 'wp_admin'), namespace='wp_admin')),
+    path('admin/', admin.site.urls),
     path('',include("pics.urls")),
 ]
 

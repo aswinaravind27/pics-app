@@ -11,19 +11,21 @@ class Customers(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
     
     def __str__(self):
-        return self.name
+        return self.email
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
     
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
-    
+	
+    class Meta:
+        verbose_name_plural = "Customers Database"
 
 # Create your models here.
 class AlbumsManager(models.Manager):
-    def create_with_username(self, code, path, username):
-        user = Customers.objects.get(username=username)
+    def create_with_username(self, code, path, email):
+        user = Customers.objects.get(email=email)
         return self.create(code=code, path=path, user=user)
 
 class Albums(models.Model):
@@ -37,7 +39,9 @@ class Albums(models.Model):
 
     def __str__(self):  
 
-        return f"Album {self.code} by {self.user.username}"
+        return f"{self.code} | {self.user.email}"
+    class Meta:
+        verbose_name_plural = "Albums Database"
 
 import os
 
@@ -52,6 +56,8 @@ class Photo(models.Model):
     uploaded_by = models.ForeignKey(Customers, on_delete=models.SET_NULL, null=True, blank=True)
 
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name_plural = "Photos Database"
 
 
 
@@ -62,6 +68,7 @@ class FavAlbums(models.Model):
 
     class Meta:
         unique_together = ('user', 'album')  # Ensures that a user can only favorite an album once
+        verbose_name_plural = "Favourite Albums Database"
 
     def __str__(self):
         return f"{self.user.username}'s favorite: {self.album.name}"
