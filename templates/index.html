@@ -1,64 +1,98 @@
 {% extends 'base.html' %}
 {% block title %}
 <title>Pixora</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
-<!-- Title at the top -->
 <body>
-<div style="text-align: center; margin-top: 20px;">
-    <h1 style="font-family: 'Arial', sans-serif; font-weight: bold; font-size: 48px;">Pixora - Album Sharing App</h1>
-</div>
+    <!-- Centered title with modern font styling -->
+    <div style="text-align: center; margin-top: 40px;">
+        <h1 style="font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 48px; letter-spacing: 1px; color: #1a1a1a;">
+            Pixora - Album Sharing App
+        </h1>
+    </div>
 
-<!-- Main content centered vertically with more upward adjustment -->
-<div style="display: flex; justify-content: center; align-items: center; height: 70vh; text-align: center;">
-    <div>
-        <!-- Move the description text a bit higher with reduced margin -->
-        <p style="margin-bottom: 20px;">
-            Pixora is a user-friendly album-sharing web application that allows users to create, upload, and share photo albums with others. 
-            Users can also mark albums as their favorites, making it easy to revisit memorable moments.
-        </p>
-        <h2 style="text-align: left; font-family: 'Berlin Sans FB', sans-serif; font-weight: normal;">Key Features:</h2>
-        <ul style="list-style-type: none; text-align: left;">
-            <li style="margin-bottom: 10px;">Easy sign-up and login with user authentication</li>
-            <li style="margin-bottom: 10px;">Google Drive integration for seamless album storage</li>
-            <li style="margin-bottom: 10px;">Create, upload, and share albums with a shareable link</li>
-            <li style="margin-bottom: 10px;">Mark albums as favorites to organize cherished moments</li>
-            <li style="margin-bottom: 10px;">View and upload photos through a shared link with restricted access</li>
-            <li style="margin-bottom: 10px;">Responsive design for both desktop and mobile users</li>
-        </ul>
-        <div>
-            <a href="#" style="display: inline-block; padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px; font-size: 16px;">
-                Visit Pixora
-            </a>
+    <!-- Main content centered with more spacious design -->
+    <div style="display: flex; justify-content: center; align-items: center; height: 70vh; text-align: center;">
+        <div style="max-width: 800px; padding: 20px; background: rgba(255, 255, 255, 0.8); border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+            <!-- Slightly larger description text with better line height -->
+            <p style="margin-bottom: 30px; font-family: 'Roboto', sans-serif; font-size: 18px; line-height: 1.6; color: #333;">
+                Pixora is a user-friendly album-sharing web application that allows users to create, upload, and share photo albums with others.
+                Users can also mark albums as their favorites, making it easy to revisit memorable moments.
+            </p>
+            <h2 style="text-align: left; font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 600; color: #1a1a1a;">
+                Key Features:
+            </h2>
+            <ul style="list-style: none; padding: 0; text-align: left; font-family: 'Roboto', sans-serif; color: #555;">
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> Easy sign-up and login with user authentication
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> Google Drive integration for seamless album storage
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> Create, upload, and share albums with a shareable link
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> Mark albums as favorites to organize cherished moments
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> View and upload photos through a shared link with restricted access
+                </li>
+                <li style="margin-bottom: 10px; padding-left: 20px; position: relative;">
+                    <span style="position: absolute; left: 0; top: 0;">✔</span> Responsive design for both desktop and mobile users
+                </li>
+            </ul>
+            <!-- Trendy button style -->
+            <div style="margin-top: 30px;">
+                <a href="#" style="display: inline-block; padding: 12px 24px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 30px; font-size: 16px; transition: background-color 0.3s ease;">
+                    Visit Pixora
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Credits section moved up -->
-<div style="text-align: center; padding: 10px 0; margin-top: 40px;">
-    <p style="font-family: 'Bell MT', monospace;">
-        <strong>CREDITS:</strong> 
-        <a href="https://instagram.com/aaronshenny" target="_blank" class="credit-link">Aaron Shenny</a>, 
-        <a href="https://instagram.com/aaronjimmy_207" target="_blank" class="credit-link">Aaron Jimmy</a>, 
-        <a href="https://instagram.com/aswinaravind27" target="_blank" class="credit-link">Aswin Aravind</a>
-    </p>
-</div>
+    <!-- Credits section with modern font and hover effects -->
+    <div style="text-align: center; padding: 20px 0; margin-top: 20px;">
+        <p style="font-family: 'Roboto', sans-serif; color: #333;">
+            <strong>CREDITS:</strong> 
+            <a href="https://instagram.com/aaronshenny" target="_blank" class="credit-link">Aaron Shenny</a>, 
+            <a href="https://instagram.com/aaronjimmy_207" target="_blank" class="credit-link">Aaron Jimmy</a>, 
+            <a href="https://instagram.com/aswinaravind27" target="_blank" class="credit-link">Aswin Aravind</a>
+        </p>
+    </div>
 </body>
+
+<!-- Updated styles for credits links and overall page look with a gradient background -->
 <style>
+    body {
+        background: linear-gradient(135deg, #ffc196 0%, #ff6b6b 100%);
+        color: #000000;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    
     .credit-link {
         text-decoration: none;
-        color: inherit;
+        color: #0f1c2b;
+        font-weight: bold;
         transition: color 0.3s ease, transform 0.3s ease;
     }
 
     .credit-link:hover {
         color: #00fce3;
-        transform: scale(3.5); 
+        transform: scale(1.2);
     }
-    body {
-    background-color: #ffc196;
-    color: #000000;
+
+    a[href] {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a[href]:hover {
+        background-color: #ddedff;
     }
 </style>
 {% endblock %}
