@@ -76,23 +76,37 @@
     }
     
     .credit-link {
+        position: relative;
         text-decoration: none;
         color: #0f1c2b;
         font-weight: bold;
         transition: color 0.3s ease, transform 0.3s ease;
     }
 
+    .credit-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 5px;
+        background: #00fce3;
+        border-radius: 10px;
+        transition: width 0.3s ease;
+    }
+
+    .credit-link:hover::before {
+        width: 100%;
+    }
+
     .credit-link:hover {
         color: #00fce3;
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     a[href] {
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    a[href]:hover {
-        background-color: #a572a7;
+        color:#000000;
+        transition: color 0.8s ease;
     }
 </style>
 {% endblock %}
