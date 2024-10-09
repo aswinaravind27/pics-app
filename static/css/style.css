@@ -89,11 +89,11 @@ button{
   text-transform: uppercase;
   font-weight: 600;
   font-family: 'Nunito', sans-serif;
-  background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+  background: linear-gradient(135deg, #ffc196 0%, #ff6b6b 100%);
 }
 
 .submit:hover{
-  background: -webkit-linear-gradient(left, #b224ef, #7579ff);
+  background: linear-gradient(135deg, #ffc196 0%, #ff6b6b 100%);
 }
 
 .forgot-pass{
