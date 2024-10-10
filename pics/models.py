@@ -11,7 +11,7 @@ class Customers(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Last Updated")
     
     def __str__(self):
-        return self.email
+        return self.name
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
