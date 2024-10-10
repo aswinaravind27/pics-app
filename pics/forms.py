@@ -29,7 +29,7 @@ class UsersLoginForm(ModelForm):
         fields = ['email', 'password'] 
 
 class SignupForm(ModelForm):
-    name=forms.CharFiled(
+    name=forms.CharField(
         label='Album Name',
         widget=forms.TextInput(attrs={'class': 'albumname'}))
     class Meta:
