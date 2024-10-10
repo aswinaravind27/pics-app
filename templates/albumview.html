@@ -4,10 +4,10 @@
 <title>Photos in {{ album.name }}</title>
 <style type="text/css">
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Roboto', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f8f9fa;
+        background: linear-gradient(135deg, #ffc196 0%, #ff6b6b 100%);
     }
 
     .container {
@@ -38,7 +38,7 @@
     }
 
     .photo-item {
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.6);
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -84,7 +84,7 @@
     .upload-container form {
         display: inline-block;
         text-align: left;
-        background-color: white;
+        background-color: rgba(255, 255, 255, 0.6  );
         padding: 15px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -232,3 +232,4 @@
     {% endif %}
 </div>
 {% endblock %}
+
