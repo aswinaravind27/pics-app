@@ -153,7 +153,7 @@
                     {% if is_favorited %}
                         <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 36px;"  class="fas fa-heart"></a>
                     {% else %}
-                        <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 36px;"  class="fas fa-heart"></a>
+                        <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 36px;"  class="far fa-heart"></a>
                     {% endif %}
                 </form>
                 {% if owner %}
@@ -164,7 +164,7 @@
 
                 {% endif %}
             {% endif %}
-            <span class="material-symbols-outlined">
+            <span class="material-symbols-outlined" id="share">
                 share
                 </span>
                 <div id="shareModal" class="modal" style="display: none;">
@@ -234,7 +234,7 @@
 
 <script>
     const modal = document.getElementById('shareModal');
-    const shareIcon = document.querySelector('.material-symbols-outlined');
+    const shareIcon = document.querySelector('#share');
     const closeModal = document.querySelector('.close');
 
     shareIcon.addEventListener('click', () => {
