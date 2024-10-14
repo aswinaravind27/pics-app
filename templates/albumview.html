@@ -152,20 +152,20 @@
                 <form method="post" action="{% url 'favorite_album' album.code %}">
                     {% csrf_token %}
                     {% if is_favorited %}
-                        <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
+                        <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
                     {% else %}
                         <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 28px;"  class="far fa-heart"></a>
                     {% endif %}
                 </form>
                 {% if owner %}
                     <a href="{% url 'editalbum' album.code %}" style="text-decoration: none;font-size: 36px;">
-                        <span class="material-symbols-outlined" style="padding-top: 5px;">edit</span>
+                        <span class="material-symbols-outlined" style="padding-top: 5px;color: #000000;font-size: 26px;">edit</span>
                     </a>
                     
 
                 {% endif %}
             {% endif %}
-            <span class="material-symbols-outlined" id="share">
+            <span class="material-symbols-outlined" style="font-size: 26px;" id="share">
                 share
                 </span>
                 <div id="shareModal" class="modal" style="display: none;">
@@ -174,7 +174,7 @@
                         <h2>Share this album</h2>
                         <p>Copy the link below to share this album:</p>
                         <input type="text" value="{{ request.build_absolute_uri }}" id="shareLink" readonly>
-                        <button onclick="copyLink()">Copy Link</button>
+                        <button class="btn" onclick="copyLink()">Copy Link</button>
                     </div>
                 </div>
                 
