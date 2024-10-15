@@ -152,7 +152,7 @@
                 <form method="post" action="{% url 'favorite_album' album.code %}">
                     {% csrf_token %}
                     {% if is_favorited %}
-                        <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
+                        <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
                     {% else %}
                         <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 28px;"  class="far fa-heart"></a>
                     {% endif %}
