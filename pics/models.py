@@ -22,7 +22,7 @@ class Customers(models.Model):
     class Meta:
         verbose_name_plural = "Customers Database"
 
-# Create your models here.
+
 class AlbumsManager(models.Manager):
     def create_with_username(self, code, path, email):
         user = Customers.objects.get(email=email)
@@ -35,7 +35,7 @@ class Albums(models.Model):
     path = models.CharField(max_length=255,default=f'{code}\\')
     user = models.ForeignKey(Customers, on_delete=models.CASCADE, related_name='albums')
     created_at = models.DateTimeField(auto_now_add=True)
-    objects = AlbumsManager()  # Use the custom manager
+    objects = AlbumsManager() 
 
     def __str__(self):  
 
@@ -67,7 +67,7 @@ class FavAlbums(models.Model):
     favorited_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('user', 'album')  # Ensures that a user can only favorite an album once
+        unique_together = ('user', 'album')  
         verbose_name_plural = "Favourite Albums Database"
 
     def __str__(self):

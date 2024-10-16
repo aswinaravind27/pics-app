@@ -42,7 +42,7 @@
         font: size 36px;
         text-align: right;
         display: flex;
-        align-items: center; /* Aligns items vertically */
+        align-items: center; 
         gap: 8px;
     }
 
@@ -255,7 +255,7 @@
     function copyLink() {
         const shareLink = document.getElementById('shareLink');
         shareLink.select();
-        shareLink.setSelectionRange(0, 99999); // For mobile devices
+        shareLink.setSelectionRange(0, 99999); 
         navigator.clipboard.writeText(shareLink.value);
         alert("Link copied to clipboard!");
     }
