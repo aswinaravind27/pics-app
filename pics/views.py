@@ -188,11 +188,7 @@ def album_view(request, id):
     form = ImagesForm()
     logind, email = verifyLogin(request)
     print('hi')
-    # Redirect to login if the user is not logged in
-    # if not logind:
-    #     login_url = reverse('login')
-    #     next_url = f"{login_url}?{urlencode({'next': request.get_full_path()})}"
-    #     return redirect(next_url)
+    
     path = request.get_full_path()
     login_url = reverse('login')
     next_url = f"{login_url}?{urlencode({'next': path})}"
@@ -202,7 +198,7 @@ def album_view(request, id):
         album_details = get_object_or_404(Albums, code=album_code)
         return album_details.user.email == user_email,album_details.user.name
 
-    # Check if the album is favorited by the user
+    
     try:
         user = Customers.objects.get(email=email)
         is_favorited = FavAlbums.objects.filter(user=user, album=album).exists()
@@ -287,26 +283,26 @@ def delete_album(request, id):
 
 
 def delete_photo(request, id, pid):
-    # Get the album based on the ID
+  
     album = get_object_or_404(Albums, code=id)
     photo = get_object_or_404(Photo,id=pid)
     filename = photo.images.name.split('/')[-1]
-    # Construct the full path of the file
+   
     file_path = os.path.join(settings.MEDIA_ROOT, f'{id}\{filename}')
     
-    # Get the photo record
+    
     photo = get_object_or_404(Photo, album=album, images=photo.images.name)
     print('file:',file_path)
-    # Remove the file from the filesystem
+   
     if os.path.isfile(file_path):
         print(file_path)
         os.remove(file_path)
         print('Deleted')
     
-    # Delete the photo record from the database
+    
     photo.delete()
     
-    # Redirect to the album view page
+    
     return redirect('album_view', id=id) 
 
 def imageupload(request,id):
@@ -331,16 +327,15 @@ def imageupload(request,id):
 def Fav_albums(request, id):
     logined, email = verifyLogin(request)
 
-    user = get_object_or_404(Customers, email=email)  # Get the user based on the email
-    album = get_object_or_404(Albums, code=id)  # Make sure you're fetching the album by the correct field
-
-    # Check if the album is already favorited
+    user = get_object_or_404(Customers, email=email)  
+    album = get_object_or_404(Albums, code=id)  
+   
     if FavAlbums.objects.filter(user=user, album=album).exists():
-        FavAlbums.objects.filter(user=user, album=album).delete()  # Remove from favorites
+        FavAlbums.objects.filter(user=user, album=album).delete()  
     else:
-        FavAlbums.objects.create(user=user, album=album)  # Add to favorites
+        FavAlbums.objects.create(user=user, album=album)  
 
-    return redirect('album_view', id=id)  # Redirect to the album view
+    return redirect('album_view', id=id)  
 
     
 def EditAlbum(request,id):
