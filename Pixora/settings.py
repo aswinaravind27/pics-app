@@ -81,18 +81,10 @@ WSGI_APPLICATION = 'Pixora.wsgi.application'
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pixora',  # Replace with your database name
-        'USER': os.getenv('DATABASE_USERNAME'),     # Replace with your MySQL username
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'), # Replace with your MySQL password
-        'HOST': os.getenv('DATABASE_HOST'),           # Set to your database host
-        'PORT': int(os.getenv('DATABASE_PORT')), 
-    }
+MONGODB_SETTINGS = {
+    'host': 'mongodb+srv://aaronshenny:user@pixora.upsn3.mongodb.net/?retryWrites=true&w=majority&appName=pixora',
+    'db': 'pixora'
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
