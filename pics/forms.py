@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 class UsersLoginForm(ModelForm):
     password = forms.CharField(
-        label='Password',  # Custom label
+        label='Password',  
         widget=forms.PasswordInput(attrs={
             'class': 'form-control', 
             'id': 'exampleFormControlTextarea1', 
@@ -14,7 +14,7 @@ class UsersLoginForm(ModelForm):
         })
     )
     email = forms.EmailField(
-        label='Email ID',  # Custom label
+        label='Email ID',  
         max_length=200, 
         widget=forms.EmailInput(attrs={
             'class': 'form-control', 

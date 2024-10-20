@@ -42,7 +42,7 @@
         font: size 36px;
         text-align: right;
         display: flex;
-        align-items: center; /* Aligns items vertically */
+        align-items: center; 
         gap: 8px;
     }
 
@@ -152,7 +152,7 @@
                 <form method="post" action="{% url 'favorite_album' album.code %}">
                     {% csrf_token %}
                     {% if is_favorited %}
-                        <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
+                        <a href="{% url 'favorite_album' album.code %}" style="color: #ff0000;text-decoration: none;font-size: 33px;"  class="fas fa-heart"></a>
                     {% else %}
                         <a href="{% url 'favorite_album' album.code %}" style="color: #000000;text-decoration: none;font-size: 28px;"  class="far fa-heart"></a>
                     {% endif %}
@@ -256,7 +256,7 @@
     function copyLink() {
         const shareLink = document.getElementById('shareLink');
         shareLink.select();
-        shareLink.setSelectionRange(0, 99999); // For mobile devices
+        shareLink.setSelectionRange(0, 99999); 
         navigator.clipboard.writeText(shareLink.value);
         alert("Link copied to clipboard!");
     }
