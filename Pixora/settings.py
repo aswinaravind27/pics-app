@@ -83,10 +83,15 @@ import os
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pixora_eem8',
+        'USER': 'aaronshenny',
+        'PASSWORD': 'Gn60TRyoka60mmI2lV3ORLI8qdPYT2T6',
+        'HOST': 'dpg-csah7bij1k6c73cphhpg-a',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
