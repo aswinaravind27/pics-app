@@ -81,10 +81,13 @@ WSGI_APPLICATION = 'Pixora.wsgi.application'
 from dotenv import load_dotenv
 import os
 
-MONGODB_SETTINGS = {
-    'host': 'mongodb+srv://aaronshenny:user@pixora.upsn3.mongodb.net/?retryWrites=true&w=majority&appName=pixora',
-    'db': 'pixora'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
