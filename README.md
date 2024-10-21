@@ -27,7 +27,7 @@
    ```bash
    python manage.py runserver
    ```
-
+# NOTE : In pixora/settings.py, change your database according to your preference.
 ## Usage
 
 - Visit `http://127.0.0.1:8000/` to access the app.
