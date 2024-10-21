@@ -1,5 +1,51 @@
 
-### Breakdown of Key Functions:
+# Pixora
+
+**Pixora** is a Django-based photo-sharing web application that allows users to create, manage, and share photo albums. It includes user authentication, album management, and features like marking albums as favorites.
+
+## Features
+- **User Authentication**: Signup, login, and logout functionalities.
+- **Album Management**: Create, edit, delete albums.
+- **Photo Upload**: Upload photos to specific albums.
+- **Favorite Albums**: Users can mark albums as favorites for quick access.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/AaronShenny/pixora.git
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run migrations:
+   ```bash
+   python manage.py migrate
+   ```
+4. Start the development server:
+   ```bash
+   python manage.py runserver
+   ```
+
+## Usage
+
+- Visit `http://127.0.0.1:8000/` to access the app.
+- Sign up and create new albums.
+- Upload photos to your albums.
+- Share albums using a unique code or link.
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and create a pull request.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+### Breakdown of MAIN Functions:
 ---
 ### pics/views.py
 ---
