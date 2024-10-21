@@ -2,7 +2,7 @@
 # Pixora
 
 **Pixora** is a Django-based photo-sharing web application that allows users to create, manage, and share photo albums. It includes user authentication, album management, and features like marking albums as favorites.
-
+![Logo](static/images/logo.png)
 ## Features
 - **User Authentication**: Signup, login, and logout functionalities.
 - **Album Management**: Create, edit, delete albums.
