@@ -1,6 +1,8 @@
 
 ### Breakdown of Key Functions:
+---
 ### pics/views.py
+---
 #### 1. **`index()`**
    - **Purpose**: Renders the home page and displays user albums if they are logged in.
    - **Details**:
@@ -96,10 +98,8 @@
    - **Details**:
      - Allows changing the album’s name and share status.
      - Saves the updated details and redirects back to the album view.
-
+---
 ### pics/forms.py
-I’ll provide a detailed breakdown of the `forms.py` file from your Django project. This file contains form classes, which help handle user input for login, signup, album creation, and image uploads.
-
 ---
 
 ### Explanation of `forms.py`:
