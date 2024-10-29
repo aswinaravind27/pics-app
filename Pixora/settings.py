@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'tyj(0o!b7yhw(ai%118sm6a7$zhqsm6^%r^^2m9j47^6s8)#fo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,17 +81,17 @@ WSGI_APPLICATION = 'Pixora.wsgi.application'
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'pixora',  # Replace with your database name
-        'USER': os.getenv('DATABASE_USERNAME'),     # Replace with your MySQL username
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'), # Replace with your MySQL password
-        'HOST': os.getenv('DATABASE_HOST'),           # Set to your database host
-        'PORT': int(os.getenv('DATABASE_PORT')), 
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pixora_eem8',
+        'USER': 'aaronshenny',
+        'PASSWORD': 'Gn60TRyoka60mmI2lV3ORLI8qdPYT2T6',
+        'HOST': 'dpg-csah7bij1k6c73cphhpg-a',
+        'PORT': '5432',
     }
 }
+
 
 
 # Password validation
